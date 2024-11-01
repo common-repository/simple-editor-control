@@ -1,0 +1,462 @@
+/*:root {
+  --bg-color:f2f2f2;
+  --text-color: #333;
+  --border-color: #ccc;
+  --hover-bg: rgba(0,0,0,0.05);
+  --shadow-color: rgba(0,0,0,0.1);
+  --focus-color: #51a7e8;
+}
+
+[data-theme="dark"] {
+  --bg-color: #2b2b2b;
+  --text-color: #e1e1e1;
+  --border-color: #555;
+  --hover-bg: rgba(255,255,255,0.05);
+  --shadow-color: rgba(0,0,0,0.5);
+}
+
+@font-face {
+  font-family: 'code_changed';
+  src: url('../fonts/Monda-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.simple-editor-control-shadow {
+  -webkit-border-radius: 0% 0% 100% 100% / 10% 0% 8px 8px;
+  -webkit-box-shadow: var(--shadow-color) 0 2px 3px;
+}
+
+.simple-editor-control-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 90%;
+  max-width: 1200px;
+  min-height: 80vh;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 1px 1px 2px #fff inset,
+              -1px -1px 2px #fff inset;
+  border-radius: 8px;
+  color: var(--text-color);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.simple-editor-control-notice {
+  position: relative;
+  left: 10%;
+  max-width: 85%;
+  margin-top: 4%;
+}
+
+.plugin-details {
+  transition: background-color 0.3s ease;
+}
+
+.plugin-diff-details:hover {
+	background-color: var(--shadow-color);
+}
+
+.plugin-details:hover, .plugin-details:focus {
+  background-color: var(--hover-bg);
+}
+
+input:focus, button:focus, .plugin-details:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-color);
+}
+
+@media (max-width: 768px) {
+  .simple-editor-control-container {
+    width: 95%;
+    margin-top: 20px;
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  
+  .simple-editor-control-notice {
+    left: 0;
+    max-width: 100%;
+  }
+}
+
+// Pour personnaliser davantage et ajouter de l'interactivité
+//.plugin-details-container {
+//  max-height: 0;
+//  overflow: hidden;
+//  transition: max-height 0.2s ease-out;
+//}
+
+.plugin-details-container.show {
+  max-height: 500px;
+}
+
+.plugin-details-container {
+  opacity: 1;
+  visibility: visible;
+  max-height: 0; // On le garde pour s'assurer que le contenu ne prend pas de place
+  transition: opacity 0.2s ease-out, visibility 0s linear 0.2s;
+}
+
+.plugin-details-container.show {
+  opacity: 1;
+  visibility: visible;
+  max-height: 1000px; // Ajustez selon le besoin, mais assez grand pour votre contenu
+  transition-delay: 0s, 0s; // Supprime le délai lors de l'affichage
+}
+
+.simple-editor-container {
+    font-family: 'code_changed', monospace;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.modifications-list {
+    width: 200%;
+}
+
+.context-selector {
+	margin-left: auto;
+    width: 30%;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.context-selector label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.context-selector select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+    font-size: 16px;
+    color: var(--text-color);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 20px auto;
+}
+
+.context-selector select:hover {
+    border-color: #888;
+}
+
+.context-selector select:focus {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 3px var(--focus-color);
+    outline: none;
+}
+
+.context-selector select option {
+    background-color: white;
+    color: var(--text-color);
+}
+
+.context-selector select:focus option:checked {
+    background: var(--focus-color) linear-gradient(0deg, var(--focus-color) 0%, var(--focus-color) 100%);
+    color: white;
+}
+
+.context-selector select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+/*
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e4e4e4;
+    --border-color: #333;
+    --hover-bg: #3a3a3a;
+    --shadow-color: rgba(0,0,0,0.5);
+    --focus-color: #007acc;
+    --link-color: #61dafb;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'code_changed', monospace;
+}
+
+.simple-editor-control-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2c2c2c;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.modifications-list, .context-selector {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.simple-editor-control-notice a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.simple-editor-control-notice a:hover, 
+.simple-editor-control-notice a:focus {
+    color: var(--focus-color);
+    outline: none;
+}
+
+.plugin-details-container {
+    background-color: #333;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.plugin-details-container.show {
+    max-height: 5000px;
+    opacity: 1;
+}
+
+.context-selector select {
+    background: #444;
+    color: var(--text-color);
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .simple-editor-control-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .modifications-list {
+        width: 70%;
+    }
+    
+    .context-selector {
+        width: 25%;
+    }
+}
+*/
+
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e4e4e4;
+    --border-color: #333;
+    --hover-bg: #3a3a3a;
+    --shadow-color: rgba(0,0,0,0.5);
+    --focus-color: #007acc;
+    --link-color: #61dafb;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'code_changed', monospace;
+}
+
+.plugin-details-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2c2c2c;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.plugin-title {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modifications-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modification-item {
+    margin-bottom: 20px;
+    background: #333;
+    padding: 15px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.modification-item:hover {
+    background: var(--hover-bg);
+}
+
+.modification-link {
+	width: fit-content; /* or use 'max-content' in some browsers */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    display: inline-block; /* Allows the width to take effect */
+    color: var(--link-color);
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.modification-link:hover, 
+.modification-link:focus {
+    color: var(--focus-color);
+    outline: none;
+}
+
+.modification-file {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.modification-content {
+    background-color: #444;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.modification-content.show {
+	color: black;
+    max-height: 5000px;
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .plugin-details-container {
+        padding: 30px;
+    }
+    
+    .modification-content {
+        padding: 15px;
+    }
+}
+
+.simple-editor-control-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2c2c2c;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    position: relative; /* Position relative for absolute positioning of context selector */
+}
+
+.context-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30%;
+    background: #444; /* Changed to fit with the dark theme */
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Slight shadow for depth */
+    margin-left: 0; /* Overriding the left margin */
+}
+
+.context-selector label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.context-selector select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 0; /* Removed bottom margin as it's not needed here */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #444; /* Dark background */
+    font-size: 16px;
+    color: var(--text-color);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23e4e4e4" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 20px auto;
+}
+
+.context-selector select:hover {
+    border-color: #888;
+}
+
+.context-selector select:focus {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 3px var(--focus-color);
+    outline: none;
+}
+
+.context-selector select option {
+    background-color: #444; /* Dark background for options */
+    color: var(--text-color);
+}
+
+.context-selector select:focus option:checked {
+    background: var(--focus-color) linear-gradient(0deg, var(--focus-color) 0%, var(--focus-color) 100%);
+    color: white;
+}
+
+.context-selector select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Pour s'assurer que le contenu principal ne soit pas caché sous le sélecteur de contexte */
+.simple-editor-control-container > :not(.context-selector) {
+    margin-top: 40px; /* Space for the context selector */
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+    .context-selector {
+        position: static;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .simple-editor-control-container > :not(.context-selector) {
+        margin-top: 20px;
+    }
+}
